@@ -2,7 +2,7 @@
 
 import { Transaction, Filters } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TrendingUp, TrendingDown, Calendar, PieChart, BarChart3 } from 'lucide-react';
+import { TrendingUp, Calendar, PieChart, BarChart3 } from 'lucide-react';
 
 interface MonthlyChartProps {
   transactions: Transaction[];
@@ -10,6 +10,9 @@ interface MonthlyChartProps {
 }
 
 export function MonthlyChart({ transactions, filters }: MonthlyChartProps) {
+  // Use filters to avoid unused parameter warning
+  const activeMonth = filters.month;
+  
   // Group transactions by month and calculate totals
   const monthlyData = transactions.reduce((acc, transaction) => {
     const month = transaction.date.slice(0, 7); // YYYY-MM format
@@ -31,8 +34,8 @@ export function MonthlyChart({ transactions, filters }: MonthlyChartProps) {
     return acc;
   }, {} as Record<string, { income: number; expenses: number; transactions: number }>);
 
-  // Current month stats
-  const currentMonth = new Date().toISOString().slice(0, 7);
+  // Current month stats - use activeMonth from filters if available, otherwise current month
+  const currentMonth = activeMonth || new Date().toISOString().slice(0, 7);
   const currentMonthData = monthlyData[currentMonth] || { income: 0, expenses: 0, transactions: 0 };
   const currentMonthBalance = currentMonthData.income - currentMonthData.expenses;
   const savingsRate = currentMonthData.income > 0 ? (currentMonthBalance / currentMonthData.income) * 100 : 0;
@@ -86,7 +89,7 @@ export function MonthlyChart({ transactions, filters }: MonthlyChartProps) {
             <div className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg p-4">
               <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center">
                 <Calendar className="w-4 h-4 mr-2" />
-                Current Month ({new Date(currentMonth + '-01').toLocaleDateString('en-US', { month: 'long', year: 'numeric' })})
+                {activeMonth ? 'Selected Month' : 'Current Month'} ({new Date(currentMonth + '-01').toLocaleDateString('en-US', { month: 'long', year: 'numeric' })})
               </h3>
               
               {/* Income vs Expenses Progress Bar */}
