@@ -94,7 +94,7 @@ export function TransactionList({
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <Select
                 value={filters.type}
-                onValueChange={(value) => onFiltersChange({ ...filters, type: value as any })}
+                onValueChange={(value) => onFiltersChange({ ...filters, type: value as 'all' | 'income' | 'expense' })}
               >
                 <SelectTrigger className="bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm">
                   <SelectValue placeholder="Type" />
