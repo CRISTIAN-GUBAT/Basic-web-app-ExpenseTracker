@@ -2,7 +2,6 @@
 
 import { useToast } from '@/contexts/toast-context';
 import { CheckCircle, XCircle, AlertTriangle, Info, X } from 'lucide-react';
-import { useEffect } from 'react';
 
 const toastIcons = {
   success: CheckCircle,
