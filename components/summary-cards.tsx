@@ -2,7 +2,7 @@
 
 import { Transaction } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowUpCircle, ArrowDownCircle, Wallet, TrendingUp, TrendingDown } from 'lucide-react';
+import { ArrowUpCircle, Wallet, TrendingUp, TrendingDown } from 'lucide-react';
 
 interface SummaryCardsProps {
   transactions: Transaction[];
